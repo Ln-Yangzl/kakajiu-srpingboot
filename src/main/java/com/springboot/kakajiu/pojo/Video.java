@@ -1,4 +1,4 @@
-package com.springboot.kakajiu.entity;
+package com.springboot.kakajiu.pojo;
 
 
 import lombok.*;

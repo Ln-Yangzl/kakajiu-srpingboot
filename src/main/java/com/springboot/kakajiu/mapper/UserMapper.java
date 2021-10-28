@@ -2,7 +2,7 @@ package com.springboot.kakajiu.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.springboot.kakajiu.entity.User;
+import com.springboot.kakajiu.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
