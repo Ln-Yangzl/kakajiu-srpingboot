@@ -1,5 +1,9 @@
 package com.springboot.kakajiu.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 /**
@@ -10,6 +14,8 @@ import java.util.List;
  *      status为状态，0为正常
  *      error为错误信息
  */
+
+@Data
 public abstract class AbstractResponseBody<T> {
 
     private List<T> data;

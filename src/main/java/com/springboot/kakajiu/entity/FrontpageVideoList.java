@@ -20,19 +20,14 @@ public class FrontpageVideoList extends AbstractResponseBody<FrontpageVideoListD
      * 构造函数
      * @param tagClassifiedVideos key是视频的类别名，值是视频名列表
      */
-    FrontpageVideoList(Map<String, List<String>> tagClassifiedVideos){
+    public FrontpageVideoList(Map<String, List<String>> tagClassifiedVideos){
         ArrayList<FrontpageVideoListData> frontpageVideoListData = new ArrayList<>();
         tagClassifiedVideos.forEach((key, value) -> {
             frontpageVideoListData.add(new FrontpageVideoListData(key, value));
         });
+        this.setData(frontpageVideoListData);
+        this.setStatus(0);
     }
 
 }
 
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-class FrontpageVideoListData{
-    private String tagName;
-    private List<String> videos;
-}
