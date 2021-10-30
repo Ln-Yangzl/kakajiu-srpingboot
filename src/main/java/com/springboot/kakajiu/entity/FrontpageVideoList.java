@@ -1,9 +1,11 @@
 package com.springboot.kakajiu.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +16,8 @@ import java.util.Map;
  * discription: for /api/frontpage responseBody
  */
 @ToString
-public class FrontpageVideoList extends AbstractResponseBody<FrontpageVideoListData>{
+@Data
+public class FrontpageVideoList extends AbstractResponseBody<FrontpageVideoListData> implements Serializable {
 
     /**
      * 构造函数

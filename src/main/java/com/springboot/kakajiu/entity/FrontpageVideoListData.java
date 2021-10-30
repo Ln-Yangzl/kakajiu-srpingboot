@@ -1,9 +1,11 @@
 package com.springboot.kakajiu.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class FrontpageVideoListData {
+@Data
+public class FrontpageVideoListData implements Serializable {
     private String tagName;
     private List<String> videos;
 }
