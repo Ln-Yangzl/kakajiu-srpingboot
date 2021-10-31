@@ -15,6 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author zlyang
+ * @date 2021-10-31
+ * @discription service for videos
+ */
 @Service
 public class VideoInfo {
 

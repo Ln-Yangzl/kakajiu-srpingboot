@@ -16,7 +16,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class User implements Serializable {
 
-    private int userId;
+    private int userId = 0;
     private String username;
     private String password;
     private String roles;
