@@ -1,4 +1,4 @@
-package com.springboot.kakajiu.service;
+package com.springboot.kakajiu.config;
 
 import com.springboot.kakajiu.entity.ShiroAuthToken;
 import com.springboot.kakajiu.pojo.User;
@@ -11,14 +11,13 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.stereotype.Service;
 
 /**
  * @author zlyang
  * @date 2021-10-31
  * @discription 用户授权和认证
  */
-@Service
+
 public class ShiroRealm extends AuthorizingRealm {
     @Override
     public boolean supports(AuthenticationToken authenticationToken) {

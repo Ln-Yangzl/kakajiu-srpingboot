@@ -25,6 +25,9 @@ public class UserService {
     }
 
     public User getUserByNameAndPsw(String username, String password){
+        if(username == null || password == null){
+            return null;
+        }
         QueryWrapper<User> query = Wrappers.query();
         query.select("user_id", "roles").eq("password", password).eq("username", username);
         User user = userMapper.selectOne(query);

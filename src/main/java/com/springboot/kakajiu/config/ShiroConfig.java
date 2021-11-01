@@ -1,15 +1,17 @@
 package com.springboot.kakajiu.config;
 
-import com.springboot.kakajiu.service.ShiroRealm;
+import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
+import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.Resource;
+import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author zlyang
@@ -28,6 +30,10 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //设置安全管理器
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
+        Map<String, Filter> filters = new HashMap<>(2);
+        //添加 shiroAuthFilter 的拦截器，不要使用 Spring 来管理 Bean
+        filters.put("authFilter", new ShiroAuthFilter());
+        shiroFilterFactoryBean.setFilters(filters);
 
         //添加shiro的内置过滤器
         /**
@@ -37,14 +43,14 @@ public class ShiroConfig {
          * perms: 拥有对摸个资源的权限才能访问
          * role: 拥有某个角色权限才能访问
          */
-
+        // 一定要用 LinkedHashMap，HashMap 顺序不一定按照 put 的顺序，拦截匹配规则是从上往下的
         LinkedHashMap<String, String> filterMap = new LinkedHashMap<>();
 
-        filterMap.put("/testauth", "authc");
+        filterMap.put("/testauth", "authFilter");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         // 设置登陆页面
-        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setLoginUrl("/noauth");
         // 设置未授权页面
         shiroFilterFactoryBean.setUnauthorizedUrl("/noauth");
 
@@ -64,6 +70,14 @@ public class ShiroConfig {
         // 关联realm
         defaultWebSecurityManager.setRealm(shiroRealm);
 
+        // 关闭 Session
+        // shiro.ini 方式参考 http://shiro.apache.org/session-management.html#disabling-subject-state-session-storage
+        DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
+        defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
+        DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
+        subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
+        defaultWebSecurityManager.setSubjectDAO(subjectDAO);
+
         return defaultWebSecurityManager;
     }
 
@@ -71,8 +85,8 @@ public class ShiroConfig {
      * create Realm
      * @return
      */
-    @Bean(name="userRealm")
-    public ShiroRealm userRealm(){
+    @Bean(name="shiroRealm")
+    public ShiroRealm shiroRealm(){
         return new ShiroRealm();
     }
 

@@ -41,7 +41,7 @@ public class JwtUtils {
                 .setExpiration(date)
                 .signWith(SignatureAlgorithm.HS256, getKeyInstance())
                 .compact();
-        return token;
+        return String.format("Bearer %s", token);
     }
 
     public static User validationToken(String token){
@@ -53,10 +53,10 @@ public class JwtUtils {
             user.setRoles(claims.get("roles").toString());
             return user;
         } catch (ExpiredJwtException e){
-            log.info(e.getMessage());
+            log.info("ExpiredJwtException" + e.getMessage());
             return null;
         } catch (UnsupportedJwtException | MalformedJwtException e){
-            log.warn(e.getMessage());
+            log.warn("UnsupportedJwtException or MalformedJwtException" + e.getMessage());
             return null;
         }
     }
