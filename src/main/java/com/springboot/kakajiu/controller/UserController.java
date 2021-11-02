@@ -2,17 +2,14 @@ package com.springboot.kakajiu.controller;
 
 import com.springboot.kakajiu.entity.LoginResponse;
 import com.springboot.kakajiu.entity.SimpleResponseInfo;
+import com.springboot.kakajiu.entity.UpdateTokenResponse;
 import com.springboot.kakajiu.pojo.User;
 import com.springboot.kakajiu.service.UserService;
 import com.springboot.kakajiu.utils.JwtUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author zlyang
@@ -55,12 +52,18 @@ public class UserController {
         return loginResponse;
     }
 
-    @GetMapping("/noauth")
-    public Object unauthorized(){
-        SimpleResponseInfo responseInfo = new SimpleResponseInfo();
-        responseInfo.setStatus(-1);
-        responseInfo.setError("no auth!");
-        return responseInfo;
+    @GetMapping("/api/updatetoken")
+    public Object updateToken(@RequestHeader(value = "Authorization") String token){
+        String newToken = userService.updateToken(token);
+        UpdateTokenResponse response = new UpdateTokenResponse();
+        if(newToken == null){
+             response.setStatus(1);
+             response.setError("token 无效");
+        } else {
+            response.setStatus(0);
+            response.setNewToken(newToken);
+        }
+        return response;
     }
 
 }

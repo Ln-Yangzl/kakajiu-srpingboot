@@ -33,8 +33,8 @@ public class ShiroAuthFilter extends BasicHttpAuthenticationFilter {
 
     /**
      * @discripition 解决跨域的时候请求头信息被拦截的问题
-     * @param request
-     * @param response
+     * @param servletRequest
+     * @param servletResponse
      * @return
      * @throws Exception
      */

@@ -58,6 +58,9 @@ public class JwtUtils {
         } catch (UnsupportedJwtException | MalformedJwtException e){
             log.warn("UnsupportedJwtException or MalformedJwtException" + e.getMessage());
             return null;
+        } catch (SignatureException e){
+            log.warn("SignatureException" + e.getMessage());
+            return null;
         }
     }
 

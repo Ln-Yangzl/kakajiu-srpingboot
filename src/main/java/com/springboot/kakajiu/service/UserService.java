@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.springboot.kakajiu.mapper.UserMapper;
 import com.springboot.kakajiu.pojo.User;
+import com.springboot.kakajiu.utils.JwtUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,6 +38,15 @@ public class UserService {
         user.setUsername(username);
         user.setPassword(password);
         return user;
+    }
+
+    public String updateToken(String token){
+        User user = JwtUtils.validationToken(token.substring("Bearer ".length()));
+        if(user == null){
+            return null;
+        }
+        String newToken = JwtUtils.generatorToken(user);
+        return newToken;
     }
 
 }
