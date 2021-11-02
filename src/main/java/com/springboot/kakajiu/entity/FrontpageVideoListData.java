@@ -18,6 +18,6 @@ import java.util.List;
 @ToString
 @Data
 public class FrontpageVideoListData implements Serializable {
-    private String tagName;
+    private String tagname;
     private List<String> videos;
 }
