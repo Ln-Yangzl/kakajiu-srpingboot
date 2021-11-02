@@ -1,8 +1,10 @@
 package com.springboot.kakajiu.service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.springboot.kakajiu.entity.FrontpageVideoList;
+import com.springboot.kakajiu.entity.VideoSrcResponse;
 import com.springboot.kakajiu.mapper.VideoMapper;
 import com.springboot.kakajiu.mapper.VideoTagMapper;
 import com.springboot.kakajiu.pojo.Video;
@@ -45,5 +47,21 @@ public class VideoInfo {
         });
         return new FrontpageVideoList(classifiedVideos);
     };
+
+    public VideoSrcResponse getVideoSrcByName(String videoName){
+        QueryWrapper<Video> videoWrapper = Wrappers.query();
+        videoWrapper.select("video_src");
+        videoWrapper.eq("title", videoName);
+        Video video = videoMapper.selectOne(videoWrapper);
+        VideoSrcResponse response = new VideoSrcResponse();
+        if(video == null){
+            response.setStatus(2);
+            response.setError("查询结果为空，检查videoname是否正确");
+        } else {
+            response.setStatus(0);
+            response.setVideoSrc(video.getVideoSrc());
+        }
+        return response;
+    }
 
 }

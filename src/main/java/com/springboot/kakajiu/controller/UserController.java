@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author zlyang
@@ -31,15 +33,21 @@ public class UserController {
         return responseInfo;
     }
 
-    @PostMapping("/login")
-    public Object login(String username, String password){
-        if(username==null||password==null){
+    @PostMapping({"/login","/api/login"})
+    public Object login(String username, String password, ServletResponse response){
+        if(username == null || password == null || username.isEmpty() || password.isEmpty()){
             SimpleResponseInfo responseInfo = new SimpleResponseInfo();
             responseInfo.setStatus(2);
             responseInfo.setError("缺失用户名或密码");
             return responseInfo;
         }
         User user = userService.getUserByNameAndPsw(username, password);
+        if(user == null){
+            SimpleResponseInfo responseInfo = new SimpleResponseInfo();
+            responseInfo.setStatus(2);
+            responseInfo.setError("用户名或密码错误");
+            return responseInfo;
+        }
         String token = JwtUtils.generatorToken(user);
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setIdentity(user.getRoles());

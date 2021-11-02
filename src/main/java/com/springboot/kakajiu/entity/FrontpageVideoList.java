@@ -1,8 +1,6 @@
 package com.springboot.kakajiu.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
@@ -31,6 +29,7 @@ public class FrontpageVideoList extends AbstractResponseBody<FrontpageVideoListD
         this.setData(frontpageVideoListData);
         this.setStatus(0);
     }
+
 
 }
 

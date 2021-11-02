@@ -47,6 +47,7 @@ public class ShiroConfig {
         LinkedHashMap<String, String> filterMap = new LinkedHashMap<>();
 
         filterMap.put("/testauth", "authFilter");
+        filterMap.put("/api/getvideourl", "authFilter");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         // 设置登陆页面

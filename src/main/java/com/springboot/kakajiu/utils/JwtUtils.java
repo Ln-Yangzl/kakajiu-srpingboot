@@ -41,7 +41,7 @@ public class JwtUtils {
                 .setExpiration(date)
                 .signWith(SignatureAlgorithm.HS256, getKeyInstance())
                 .compact();
-        return String.format("Bearer %s", token);
+        return token;
     }
 
     public static User validationToken(String token){
