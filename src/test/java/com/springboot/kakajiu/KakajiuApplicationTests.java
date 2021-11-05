@@ -7,6 +7,7 @@ import com.springboot.kakajiu.entity.ResponseBody;
 import com.springboot.kakajiu.entity.TagResponseData;
 import com.springboot.kakajiu.pojo.User;
 import com.springboot.kakajiu.mapper.UserMapper;
+import com.springboot.kakajiu.service.RolesService;
 import com.springboot.kakajiu.service.VideoInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +23,9 @@ class KakajiuApplicationTests {
 
     @Resource
     VideoInfo videoInfo;
+
+    @Resource
+    RolesService rolesService;
 
 
     @Test
@@ -51,6 +55,17 @@ class KakajiuApplicationTests {
         tags.getData().forEach(System.out::println);
         ResponseBody<String> videos = videoInfo.getVideosByTag("央视");
         videos.getData().forEach(System.out::println);
+    }
+
+    @Test
+    void testGetInviteKey(){
+        String inviteKey = rolesService.getInviteKey(2);
+        System.out.println(inviteKey);
+    }
+
+    @Test
+    void testSetInviteKey(){
+        System.out.println(rolesService.setInviteKey(2, "kamisato"));
     }
 
 }

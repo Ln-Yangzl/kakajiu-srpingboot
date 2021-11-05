@@ -48,6 +48,8 @@ public class ShiroConfig {
 
         filterMap.put("/testauth", "authFilter");
         filterMap.put("/api/getvideourl", "authFilter");
+//        filterMap.put("/api/getinvitekey", "roles[teacher]");
+//        filterMap.put("/api/setinvitekey", "roles[teacher]");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         // 设置登陆页面

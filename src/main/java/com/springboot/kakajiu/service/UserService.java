@@ -40,6 +40,10 @@ public class UserService {
         return user;
     }
 
+    public User validationToken(String token){
+        return JwtUtils.validationToken(token.substring("Bearer ".length()));
+    }
+
     public String updateToken(String token){
         User user = JwtUtils.validationToken(token.substring("Bearer ".length()));
         if(user == null){

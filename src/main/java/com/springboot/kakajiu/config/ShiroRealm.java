@@ -26,9 +26,11 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        System.out.println("执行认证开始");
         User user = JwtUtils.validationToken(principalCollection.toString());
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        if(!user.getRoles().isEmpty()){
+        System.out.println("执行认证：" + user.getRoles());
+        if(user.getRoles() != null && !user.getRoles().isEmpty()){
             info.addRole(user.getRoles());
         }
         return info;

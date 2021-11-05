@@ -3,8 +3,6 @@ package com.springboot.kakajiu.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.kakajiu.entity.ShiroAuthToken;
 import com.springboot.kakajiu.entity.SimpleResponseInfo;
-import com.springboot.kakajiu.pojo.User;
-import com.springboot.kakajiu.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
