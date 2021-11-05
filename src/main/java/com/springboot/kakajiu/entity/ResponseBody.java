@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  */
 
 @Data
-public abstract class AbstractResponseBody<T> {
+public class ResponseBody<T> implements Serializable {
 
     private List<T> data;
     private int status;

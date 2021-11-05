@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.springboot.kakajiu.entity.FrontpageVideoList;
+import com.springboot.kakajiu.entity.ResponseBody;
+import com.springboot.kakajiu.entity.TagResponseData;
 import com.springboot.kakajiu.entity.VideoSrcResponse;
 import com.springboot.kakajiu.mapper.VideoMapper;
 import com.springboot.kakajiu.mapper.VideoTagMapper;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author zlyang
@@ -62,6 +65,29 @@ public class VideoInfo {
             response.setVideoSrc(video.getVideoSrc());
         }
         return response;
+    }
+
+    public ResponseBody<TagResponseData> getTags(){
+        QueryWrapper<VideoTag> wrapper = Wrappers.query();
+        wrapper.select("tag_name");
+        List<VideoTag> videoTags = videoTagMapper.selectList(wrapper);
+        List<TagResponseData> responseData = videoTags.stream().map((videoTag) -> new TagResponseData(videoTag.getTagName())).collect(Collectors.toList());
+        ResponseBody<TagResponseData> responseBody = new ResponseBody<>();
+        responseBody.setStatus(0);
+        responseBody.setData(responseData);
+        return responseBody;
+    }
+
+    public ResponseBody<String> getVideosByTag(String tagName){
+        QueryWrapper<Video> wrapper = Wrappers.query();
+        wrapper.select("title");
+        wrapper.eq("tag_name", tagName);
+        List<Video> videos = videoMapper.selectList(wrapper);
+        List<String> videoNames = videos.stream().map((e) -> e.getTitle()).collect(Collectors.toList());
+        ResponseBody<String> responseBody = new ResponseBody<>();
+        responseBody.setStatus(0);
+        responseBody.setData(videoNames);
+        return responseBody;
     }
 
 }

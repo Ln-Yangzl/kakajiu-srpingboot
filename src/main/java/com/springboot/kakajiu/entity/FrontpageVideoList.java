@@ -15,7 +15,7 @@ import java.util.Map;
  */
 @ToString
 @Data
-public class FrontpageVideoList extends AbstractResponseBody<FrontpageVideoListData> implements Serializable {
+public class FrontpageVideoList extends ResponseBody<FrontpageVideoListData> implements Serializable {
 
     /**
      * 构造函数

@@ -40,4 +40,20 @@ public class VideoController {
         return videoInfo.getVideoSrcByName(videoName);
     }
 
+    @GetMapping("/api/tags")
+    public Object getTags(){
+        return videoInfo.getTags();
+    }
+
+    @GetMapping("/api/tagvideo")
+    public Object getTagVideo(@RequestParam(value = "tagname") String tagName){
+        if(tagName.isBlank()){
+            SimpleResponseInfo responseInfo = new SimpleResponseInfo();
+            responseInfo.setStatus(2);
+            responseInfo.setError("接收到tagname参数为空");
+            return responseInfo;
+        }
+        return videoInfo.getVideosByTag(tagName);
+    }
+
 }

@@ -3,6 +3,8 @@ package com.springboot.kakajiu;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.springboot.kakajiu.entity.FrontpageVideoList;
+import com.springboot.kakajiu.entity.ResponseBody;
+import com.springboot.kakajiu.entity.TagResponseData;
 import com.springboot.kakajiu.pojo.User;
 import com.springboot.kakajiu.mapper.UserMapper;
 import com.springboot.kakajiu.service.VideoInfo;
@@ -41,6 +43,14 @@ class KakajiuApplicationTests {
     void testGetClassifiedVideos(){
         FrontpageVideoList classifiedVideos = videoInfo.getClassifiedVideos();
         classifiedVideos.getData().forEach(System.out::println);
+    }
+
+    @Test
+    void testGetTagsAndGetVideosByTag(){
+        ResponseBody<TagResponseData> tags = videoInfo.getTags();
+        tags.getData().forEach(System.out::println);
+        ResponseBody<String> videos = videoInfo.getVideosByTag("央视");
+        videos.getData().forEach(System.out::println);
     }
 
 }
