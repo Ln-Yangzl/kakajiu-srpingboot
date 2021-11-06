@@ -1,5 +1,6 @@
 package com.springboot.kakajiu.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.*;
 
 import java.io.Serializable;
@@ -16,7 +17,8 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class VideoTag implements Serializable {
 
-    private int tagId;
+    @TableId
+    private Integer tagId;
     private String tagName;
 
 }

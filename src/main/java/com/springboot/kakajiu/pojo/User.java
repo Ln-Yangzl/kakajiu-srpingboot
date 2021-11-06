@@ -1,5 +1,6 @@
 package com.springboot.kakajiu.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.*;
 
 import java.io.Serializable;
@@ -15,8 +16,8 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode
 public class User implements Serializable {
-
-    private int userId = 0;
+    @TableId
+    private Integer userId = 0;
     private String username;
     private String password;
     private String roles;

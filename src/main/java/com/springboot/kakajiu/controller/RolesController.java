@@ -5,7 +5,6 @@ import com.springboot.kakajiu.entity.SimpleResponseInfo;
 import com.springboot.kakajiu.pojo.User;
 import com.springboot.kakajiu.service.RolesService;
 import com.springboot.kakajiu.service.UserService;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -53,6 +52,26 @@ public class RolesController {
             response.setError("sql update error!");
         }
         return response;
+    }
+
+    @GetMapping("/api/checkpassword")
+    public Object checkPassword(@RequestParam(value = "password") String password, @RequestHeader(value = "Authorization") String token){
+        try{
+            boolean status = rolesService.checkUserPassword(userService.validationToken(token), password);
+            SimpleResponseInfo response = new SimpleResponseInfo();
+            response.setStatus(0);
+            if(!status){
+                response.setStatus(2);
+                response.setError("Invalid password");
+            }
+            return response;
+        }catch (NullPointerException e){
+            SimpleResponseInfo response = new SimpleResponseInfo();
+            response.setStatus(2);
+            response.setError("Token error or unknown error!");
+            e.printStackTrace();
+            return response;
+        }
     }
 
 }

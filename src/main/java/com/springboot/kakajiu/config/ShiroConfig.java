@@ -47,9 +47,14 @@ public class ShiroConfig {
         LinkedHashMap<String, String> filterMap = new LinkedHashMap<>();
 
         filterMap.put("/testauth", "authFilter");
-        filterMap.put("/api/getvideourl", "authFilter");
+        filterMap.put("/api/login", "anon");
+        filterMap.put("/api/frontpage", "anon");
+        filterMap.put("/api/tags", "anon");
+        filterMap.put("/api/tagvideo", "anon");
+        filterMap.put("/api/**", "authFilter");
 //        filterMap.put("/api/getinvitekey", "roles[teacher]");
 //        filterMap.put("/api/setinvitekey", "roles[teacher]");
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         // 设置登陆页面

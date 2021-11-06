@@ -68,4 +68,12 @@ class KakajiuApplicationTests {
         System.out.println(rolesService.setInviteKey(2, "kamisato"));
     }
 
+    @Test
+    void testChangePassword(){
+        User user = new User();
+        user.setUserId(3);
+        int status = rolesService.changePassword(user, "abcd");
+        System.out.println(status);
+    }
+
 }
