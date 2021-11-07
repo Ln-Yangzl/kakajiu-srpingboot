@@ -68,8 +68,35 @@ public class RolesController {
         }catch (NullPointerException e){
             SimpleResponseInfo response = new SimpleResponseInfo();
             response.setStatus(2);
-            response.setError("Token error or unknown error!");
+            response.setError("Teacher id in token not found!");
             e.printStackTrace();
+            return response;
+        }
+    }
+
+    @PostMapping("/api/changepassword")
+    public Object changePassword(
+            @RequestParam(value = "oldpassword") String oldPassword,
+            @RequestParam(value = "newpassword") String newPassword,
+            @RequestHeader(value = "Authorization") String token
+    ){
+        try{
+            User user = userService.validationToken(token);
+            if(!rolesService.checkUserPassword(user, oldPassword)){
+                SimpleResponseInfo response = new SimpleResponseInfo();
+                response.setStatus(2);
+                response.setError("Wrong old password!");
+                return response;
+            } else {
+                int status = rolesService.changePassword(user, newPassword);
+                SimpleResponseInfo response = new SimpleResponseInfo();
+                response.setStatus(status == 1 ? 0 : 1);
+                return response;
+            }
+        }catch (NullPointerException e){
+            SimpleResponseInfo response = new SimpleResponseInfo();
+            response.setStatus(1);
+            response.setError("Teacher id in token not found!");
             return response;
         }
     }

@@ -48,12 +48,18 @@ public class RolesService {
         return password.equals(userSelect.getPassword());
     }
 
+    /**
+     *
+     * @param user
+     * @param password
+     * @return 1 if update success, 0 if teacherId not found
+     */
     public int changePassword(User user, String password){
         UpdateWrapper<User> updateWrapper = Wrappers.update();
         updateWrapper.eq("user_id", user.getUserId());
         updateWrapper.set("password", password);
         int status = userMapper.update(null, updateWrapper);
-        return status == 1 ? 0 : 1;
+        return status;
     }
 
 }

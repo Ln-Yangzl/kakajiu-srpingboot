@@ -36,11 +36,13 @@ class KakajiuApplicationTests {
 
     @Test
     void testWrapper(){
-        QueryWrapper<User> userQueryWrapper = Wrappers.query();
-//        QueryWrapper<User> userQueryWrapper = new QueryWrapper();
-        userQueryWrapper.select("username", "password");
-        List<User> users = userMapper.selectList(userQueryWrapper);
-        users.forEach(System.out::println);
+        User user = new User();
+        user.setUsername("test2");
+        user.setPassword("abcde");
+        user.setRoles("student");
+        int i = userMapper.insert(user);
+        System.out.println(i);
+        System.out.println(user);
     }
 
     @Test

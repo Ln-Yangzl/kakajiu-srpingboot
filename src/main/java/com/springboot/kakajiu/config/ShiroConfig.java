@@ -51,6 +51,7 @@ public class ShiroConfig {
         filterMap.put("/api/frontpage", "anon");
         filterMap.put("/api/tags", "anon");
         filterMap.put("/api/tagvideo", "anon");
+        filterMap.put("/api/registerstudent", "anon");
         filterMap.put("/api/**", "authFilter");
 //        filterMap.put("/api/getinvitekey", "roles[teacher]");
 //        filterMap.put("/api/setinvitekey", "roles[teacher]");

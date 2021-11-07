@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletResponse;
+import java.sql.SQLException;
 
 /**
  * @author zlyang
@@ -64,6 +65,29 @@ public class UserController {
             response.setNewToken(newToken);
         }
         return response;
+    }
+
+    @PostMapping("/api/registerstudent")
+    public Object registerStudent(
+            String username,
+            String password,
+            @RequestParam(value = "teachername") String teacherName,
+            @RequestParam(value = "invitekey") String inviteKey
+    ){
+        SimpleResponseInfo response = new SimpleResponseInfo();
+        try{
+            int studentId = userService.insertStudentUser(username, password, teacherName, inviteKey);
+            response.setStatus(0);
+            response.setInfo(String.valueOf(studentId));
+        }catch (NullPointerException | IllegalArgumentException e){
+            response.setStatus(2);
+            response.setError(e.getMessage());
+        }catch (SQLException e){
+            response.setStatus(1);
+            response.setError(e.getMessage());
+        }finally {
+            return response;
+        }
     }
 
 }
