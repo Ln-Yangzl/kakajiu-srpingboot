@@ -79,7 +79,10 @@ public class UserController {
             int studentId = userService.insertStudentUser(username, password, teacherName, inviteKey);
             response.setStatus(0);
             response.setInfo(String.valueOf(studentId));
-        }catch (NullPointerException | IllegalArgumentException e){
+        }catch (NullPointerException e){
+            response.setStatus(2);
+            response.setError("TeacherId not found!");
+        }catch (IllegalArgumentException e){
             response.setStatus(2);
             response.setError(e.getMessage());
         }catch (SQLException e){
