@@ -1,9 +1,7 @@
 package com.springboot.kakajiu;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.springboot.kakajiu.entity.FrontpageVideoList;
-import com.springboot.kakajiu.entity.ResponseBody;
+import com.springboot.kakajiu.entity.ResponseDataBody;
 import com.springboot.kakajiu.entity.TagResponseData;
 import com.springboot.kakajiu.pojo.User;
 import com.springboot.kakajiu.mapper.UserMapper;
@@ -13,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.util.List;
 
 @SpringBootTest
@@ -53,9 +52,9 @@ class KakajiuApplicationTests {
 
     @Test
     void testGetTagsAndGetVideosByTag(){
-        ResponseBody<TagResponseData> tags = videoInfo.getTags();
+        ResponseDataBody<TagResponseData> tags = videoInfo.getTags();
         tags.getData().forEach(System.out::println);
-        ResponseBody<String> videos = videoInfo.getVideosByTag("央视");
+        ResponseDataBody<String> videos = videoInfo.getVideosByTag("央视");
         videos.getData().forEach(System.out::println);
     }
 
@@ -75,6 +74,28 @@ class KakajiuApplicationTests {
         User user = new User();
         user.setUserId(3);
         int status = rolesService.changePassword(user, "abcd");
+        System.out.println(status);
+    }
+
+    @Test
+    void getTeacherStudents(){
+        User user = new User();
+        user.setUserId(9);
+        List<String> students = rolesService.getStudents(user);
+        System.out.println(students);
+        students.forEach(System.out::println);
+    }
+
+    @Test
+    void teacherDeleteStudent(){
+        User teacher = new User();
+        teacher.setUserId(9);
+        int status = 0;
+        try {
+            status = rolesService.teacherDeleteStudent(teacher, "student3");
+        } catch (Exception throwables) {
+            System.out.println(throwables.getMessage());
+        }
         System.out.println(status);
     }
 

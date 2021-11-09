@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 @Data
-public class ResponseBody<T> implements Serializable {
+public class ResponseDataBody<T> implements Serializable {
 
     private List<T> data;
     private int status;

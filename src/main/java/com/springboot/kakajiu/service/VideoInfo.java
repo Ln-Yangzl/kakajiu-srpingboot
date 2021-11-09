@@ -1,10 +1,9 @@
 package com.springboot.kakajiu.service;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.springboot.kakajiu.entity.FrontpageVideoList;
-import com.springboot.kakajiu.entity.ResponseBody;
+import com.springboot.kakajiu.entity.ResponseDataBody;
 import com.springboot.kakajiu.entity.TagResponseData;
 import com.springboot.kakajiu.entity.VideoSrcResponse;
 import com.springboot.kakajiu.mapper.VideoMapper;
@@ -67,27 +66,27 @@ public class VideoInfo {
         return response;
     }
 
-    public ResponseBody<TagResponseData> getTags(){
+    public ResponseDataBody<TagResponseData> getTags(){
         QueryWrapper<VideoTag> wrapper = Wrappers.query();
         wrapper.select("tag_name");
         List<VideoTag> videoTags = videoTagMapper.selectList(wrapper);
         List<TagResponseData> responseData = videoTags.stream().map((videoTag) -> new TagResponseData(videoTag.getTagName())).collect(Collectors.toList());
-        ResponseBody<TagResponseData> responseBody = new ResponseBody<>();
-        responseBody.setStatus(0);
-        responseBody.setData(responseData);
-        return responseBody;
+        ResponseDataBody<TagResponseData> responseDataBody = new ResponseDataBody<>();
+        responseDataBody.setStatus(0);
+        responseDataBody.setData(responseData);
+        return responseDataBody;
     }
 
-    public ResponseBody<String> getVideosByTag(String tagName){
+    public ResponseDataBody<String> getVideosByTag(String tagName){
         QueryWrapper<Video> wrapper = Wrappers.query();
         wrapper.select("title");
         wrapper.eq("tag_name", tagName);
         List<Video> videos = videoMapper.selectList(wrapper);
         List<String> videoNames = videos.stream().map((e) -> e.getTitle()).collect(Collectors.toList());
-        ResponseBody<String> responseBody = new ResponseBody<>();
-        responseBody.setStatus(0);
-        responseBody.setData(videoNames);
-        return responseBody;
+        ResponseDataBody<String> responseDataBody = new ResponseDataBody<>();
+        responseDataBody.setStatus(0);
+        responseDataBody.setData(videoNames);
+        return responseDataBody;
     }
 
 }

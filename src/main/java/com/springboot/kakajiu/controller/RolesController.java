@@ -1,6 +1,7 @@
 package com.springboot.kakajiu.controller;
 
 import com.springboot.kakajiu.entity.InviteKeyResponse;
+import com.springboot.kakajiu.entity.ResponseDataBody;
 import com.springboot.kakajiu.entity.SimpleResponseInfo;
 import com.springboot.kakajiu.pojo.User;
 import com.springboot.kakajiu.service.RolesService;
@@ -8,6 +9,8 @@ import com.springboot.kakajiu.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author zlyang
@@ -68,7 +71,7 @@ public class RolesController {
         }catch (NullPointerException e){
             SimpleResponseInfo response = new SimpleResponseInfo();
             response.setStatus(2);
-            response.setError("Teacher id in token not found!");
+            response.setError("Teacher id in token is invalid!");
             e.printStackTrace();
             return response;
         }
@@ -96,9 +99,40 @@ public class RolesController {
         }catch (NullPointerException e){
             SimpleResponseInfo response = new SimpleResponseInfo();
             response.setStatus(1);
-            response.setError("Teacher id in token not found!");
+            response.setError("Teacher id in token is invalid!");
             return response;
         }
+    }
+
+    @GetMapping("/api/getstudents")
+    public Object getStudents(@RequestHeader(value = "Authorization") String token){
+        User teacher = userService.validationToken(token);
+        List<String> students = rolesService.getStudents(teacher);
+        ResponseDataBody<String> responseDataBody = new ResponseDataBody<>();
+        responseDataBody.setData(students);
+        responseDataBody.setStatus(0);
+        return responseDataBody;
+    }
+
+    @PostMapping("/api/teacherdeletestudent")
+    public Object teacherDeleteStudent(
+            @RequestHeader(value = "Authorization") String token,
+            @RequestParam(value = "studentname") String studentName
+    ){
+        User teacher = userService.validationToken(token);
+        SimpleResponseInfo response = new SimpleResponseInfo();
+        try {
+            int status = rolesService.teacherDeleteStudent(teacher, studentName);
+            response.setStatus(status == 1 ? 0 : 1);
+            response.setError(status == 1 ? "" : "unknown error");
+        } catch (SQLException e) {
+            response.setStatus(1);
+            response.setError(e.getMessage());
+        } catch (NullPointerException e){
+            response.setStatus(2);
+            response.setError("StudentName not found in user!");
+        }
+        return response;
     }
 
 }
