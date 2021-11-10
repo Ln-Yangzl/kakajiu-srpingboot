@@ -1,8 +1,6 @@
 package com.springboot.kakajiu;
 
-import com.springboot.kakajiu.entity.FrontpageVideoList;
-import com.springboot.kakajiu.entity.ResponseDataBody;
-import com.springboot.kakajiu.entity.TagResponseData;
+import com.springboot.kakajiu.entity.*;
 import com.springboot.kakajiu.pojo.User;
 import com.springboot.kakajiu.mapper.UserMapper;
 import com.springboot.kakajiu.service.RolesService;
@@ -25,6 +23,7 @@ class KakajiuApplicationTests {
 
     @Resource
     RolesService rolesService;
+
 
 
     @Test
@@ -97,6 +96,17 @@ class KakajiuApplicationTests {
             System.out.println(throwables.getMessage());
         }
         System.out.println(status);
+    }
+
+    @Test
+    void testVideoCache(){
+        FrontpageVideoList classifiedVideos = videoInfo.getClassifiedVideos();
+        List<FrontpageVideoListData> data = classifiedVideos.getData();
+        System.out.println("FrontpageVideoListData");
+        data.forEach(System.out::println);
+        System.out.println("=============================");
+        VideoSrcResponse videoSrc = videoInfo.getVideoSrcByName("山东卫视-《我们正青春》");
+        System.out.println(videoSrc);
     }
 
 }

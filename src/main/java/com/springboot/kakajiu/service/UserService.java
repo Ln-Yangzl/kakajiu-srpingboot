@@ -10,6 +10,7 @@ import com.springboot.kakajiu.pojo.TeacherStudent;
 import com.springboot.kakajiu.pojo.User;
 import com.springboot.kakajiu.utils.JwtUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.sql.SQLException;
@@ -87,6 +88,7 @@ public class UserService {
      * @throws IllegalArgumentException teacherName inviteKey不一致时抛出
      * @throws NullPointerException teacherName 错误时抛出
      */
+    @Transactional(rollbackFor = Exception.class)
     public int insertStudentUser(String username, String password, String teacherName, String inviteKey) throws SQLException, IllegalArgumentException, NullPointerException {
         int teacherId = verifyTeacherNameAndInviteKey(teacherName, inviteKey);
         if(teacherId == 0){
@@ -97,7 +99,6 @@ public class UserService {
         user.setPassword(password);
         user.setRoles("student");
         int userInsetStatus = userMapper.insert(user);
-        // TODO: 合并这两个操作为一个事物，当其中一个发生错误时回滚
         if(userInsetStatus != 1){
             throw new SQLException("Insert user failed!");
         }

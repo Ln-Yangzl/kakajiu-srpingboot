@@ -10,6 +10,7 @@ import com.springboot.kakajiu.mapper.VideoMapper;
 import com.springboot.kakajiu.mapper.VideoTagMapper;
 import com.springboot.kakajiu.pojo.Video;
 import com.springboot.kakajiu.pojo.VideoTag;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,6 +34,7 @@ public class VideoInfo {
     @Resource
     VideoTagMapper videoTagMapper;
 
+    @Cacheable(value = "video-cache", key = "'getClassifiedVideos'", unless = "#result==null")
     public FrontpageVideoList getClassifiedVideos(){
         QueryWrapper<VideoTag> tagsWrapper = Wrappers.query();
         tagsWrapper.select("tag_name");
@@ -50,6 +52,7 @@ public class VideoInfo {
         return new FrontpageVideoList(classifiedVideos);
     };
 
+    @Cacheable(value = "video-cache", key = "'getVideoSrcByName:' + #videoName", unless = "#result.getStatus()!=0")
     public VideoSrcResponse getVideoSrcByName(String videoName){
         QueryWrapper<Video> videoWrapper = Wrappers.query();
         videoWrapper.select("video_src");
@@ -66,6 +69,7 @@ public class VideoInfo {
         return response;
     }
 
+    @Cacheable(value = "video-cache", key = "'getTags'")
     public ResponseDataBody<TagResponseData> getTags(){
         QueryWrapper<VideoTag> wrapper = Wrappers.query();
         wrapper.select("tag_name");
@@ -77,6 +81,7 @@ public class VideoInfo {
         return responseDataBody;
     }
 
+    @Cacheable(value = "video-cache", key = "'getVideosByTag' + #tagName")
     public ResponseDataBody<String> getVideosByTag(String tagName){
         QueryWrapper<Video> wrapper = Wrappers.query();
         wrapper.select("title");
