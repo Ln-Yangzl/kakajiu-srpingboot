@@ -1,6 +1,7 @@
 package com.springboot.kakajiu.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.*;
@@ -16,6 +17,7 @@ import java.io.IOException;
  */
 @Slf4j
 @Service
+@Order(1)
 @WebFilter(urlPatterns = "/*", filterName = "CorsFilter")
 public class CorsFilter implements Filter {
     @Override
@@ -33,6 +35,7 @@ public class CorsFilter implements Filter {
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PATCH, DELETE, PUT");
         response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         filterChain.doFilter(request, response);
+
     }
 
     @Override

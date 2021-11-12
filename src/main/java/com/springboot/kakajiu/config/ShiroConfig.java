@@ -33,8 +33,9 @@ public class ShiroConfig {
         Map<String, Filter> filters = new HashMap<>(2);
         //添加 shiroAuthFilter 的拦截器，不要使用 Spring 来管理 Bean
         ShiroAuthFilter shiroAuthFilter = new ShiroAuthFilter();
-
+        ShiroRolesFilter shiroRolesFilter = new ShiroRolesFilter();
         filters.put("authFilter", shiroAuthFilter);
+        filters.put("rolesFilter", shiroRolesFilter);
         shiroFilterFactoryBean.setFilters(filters);
 
         //添加shiro的内置过滤器
@@ -54,8 +55,8 @@ public class ShiroConfig {
         filterMap.put("/api/tags", "anon");
         filterMap.put("/api/tagvideo", "anon");
         filterMap.put("/api/registerstudent", "anon");
-        filterMap.put("/api/getinvitekey", "roles[teacher]");
-        filterMap.put("/api/setinvitekey", "roles[teacher]");
+        filterMap.put("/api/getinvitekey", "rolesFilter[teacher]");
+        filterMap.put("/api/setinvitekey", "rolesFilter[teacher]");
         filterMap.put("/api/**", "authFilter");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
