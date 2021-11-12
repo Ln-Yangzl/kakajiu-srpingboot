@@ -16,6 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `teacher_invite_key`
+--
+
+DROP TABLE IF EXISTS `teacher_invite_key`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `teacher_invite_key` (
+  `teacher_id` int NOT NULL,
+  `invite_key` varchar(40) NOT NULL DEFAULT '' COMMENT '邀请码',
+  PRIMARY KEY (`teacher_id`),
+  UNIQUE KEY `teacher_invite_key_teacher_id_uindex` (`teacher_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='教师对学生的邀请码';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `teacher_invite_key`
+--
+
+LOCK TABLES `teacher_invite_key` WRITE;
+/*!40000 ALTER TABLE `teacher_invite_key` DISABLE KEYS */;
+INSERT INTO `teacher_invite_key` VALUES (2,'kamisato');
+/*!40000 ALTER TABLE `teacher_invite_key` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `teacher_student`
 --
 
@@ -38,6 +63,7 @@ CREATE TABLE `teacher_student` (
 
 LOCK TABLES `teacher_student` WRITE;
 /*!40000 ALTER TABLE `teacher_student` DISABLE KEYS */;
+INSERT INTO `teacher_student` VALUES (2,1),(2,7),(9,11);
 /*!40000 ALTER TABLE `teacher_student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,7 +82,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_user_id_uindex` (`user_id`),
   KEY `username_index` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户信息表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +91,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'洛天依','123456','student'),(2,'神里绫华','123456','teacher');
+INSERT INTO `user` VALUES (1,'洛天依','123456','student'),(2,'神里绫华','123456','teacher'),(3,'admin','123456','admin'),(7,'student','123456','student'),(9,'teacher1','123456','teacher'),(11,'student3','123456','student');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,4 +184,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-04 22:06:19
+-- Dump completed on 2021-11-12 22:22:50
